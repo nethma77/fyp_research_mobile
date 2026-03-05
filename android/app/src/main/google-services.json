@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1086892396490",
+    "project_id": "fyp-research-mobile",
+    "storage_bucket": "fyp-research-mobile.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086892396490:android:9cd0912dad4b092ad50933",
+        "android_client_info": {
+          "package_name": "com.example.driver_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8bAFvUKedZFakHs_xIGHFhq4JwQZn2mA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
