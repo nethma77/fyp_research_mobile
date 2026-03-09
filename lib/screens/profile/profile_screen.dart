@@ -10,26 +10,36 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.account_circle, size: 100, color: Colors.grey),
-            const SizedBox(height: 20),
-            const Text('Driver Name', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const Text('Driver Email'),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () async {
-                await context.read<AuthProvider>().signOut();
-                if (context.mounted) {
-                  Navigator.pushNamedAndRemoveUntil(context, AppRoutes.welcome, (route) => false);
-                }
-              },
-              child: const Text('Sign Out'),
+      body: Consumer<AuthProvider>(
+        builder: (context, authProvider, _) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.account_circle, size: 100, color: Colors.grey),
+                const SizedBox(height: 20),
+                Text(
+                  authProvider.userName,
+                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  authProvider.userEmail,
+                  style: const TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () async {
+                    await context.read<AuthProvider>().signOut();
+                    if (context.mounted) {
+                      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.welcome, (route) => false);
+                    }
+                  },
+                  child: const Text('Sign Out'),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 import '../../utils/routes.dart';
 import '../../utils/constants.dart';
+import '../../providers/auth_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -147,13 +149,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 6),
 
                 /// WELCOME TEXT
-                const Text(
-                  "Welcome Driver 👋",
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.text,
-                  ),
+                Consumer<AuthProvider>(
+                  builder: (context, authProvider, _) {
+                    return Text(
+                      "Welcome ${authProvider.userName} 👋",
+                      style: const TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.text,
+                      ),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 18),

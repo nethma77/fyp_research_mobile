@@ -5,17 +5,26 @@ import '../services/auth_service.dart';
 class AuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
   User? _user;
+  Map<String, dynamic>? _userData;
 
   AuthProvider() {
     // Listen to auth state changes
-    _authService.authStateChanges.listen((User? user) {
+    _authService.authStateChanges.listen((User? user) async {
       _user = user;
+      // Fetch user data from Firestore when user logs in
+      if (user != null) {
+        _userData = await _authService.getUserData(user.uid);
+      } else {
+        _userData = null;
+      }
       notifyListeners();
     });
   }
 
   User? get user => _user;
   bool get isAuthenticated => _user != null;
+  String get userName => _userData?['name'] ?? 'Driver';
+  String get userEmail => _userData?['email'] ?? '';
 
   // =====================
   // SIGN IN
