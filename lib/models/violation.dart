@@ -4,7 +4,6 @@ class Violation {
   final DateTime timestamp;
   final String type; // 'speeding', 'running_red_light', 'illegal_parking'
   final String location;
-  final double fineAmount;
   final String status; // 'pending', 'paid', 'appealed'
 
   Violation({
@@ -13,7 +12,6 @@ class Violation {
     required this.timestamp,
     required this.type,
     required this.location,
-    required this.fineAmount,
     required this.status,
   });
 
@@ -24,7 +22,6 @@ class Violation {
       timestamp: json['timestamp'] != null ? DateTime.parse(json['timestamp']) : DateTime.now(),
       type: json['type'] ?? '',
       location: json['location'] ?? '',
-      fineAmount: (json['fineAmount'] ?? 0.0).toDouble(),
       status: json['status'] ?? 'pending',
     );
   }
@@ -35,7 +32,6 @@ class Violation {
       'timestamp': timestamp.toIso8601String(),
       'type': type,
       'location': location,
-      'fineAmount': fineAmount,
       'status': status,
     };
   }

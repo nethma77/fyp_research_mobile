@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import '../models/driver_profile.dart';
 import '../models/trip.dart';
 import '../services/firestore_service.dart';
+import '../services/speed_monitoring_service.dart';
+import 'auth_provider.dart';
 
 class AppStateProvider extends ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService();
+  final SpeedMonitoringService _speedService = SpeedMonitoringService();
 
   DriverProfile? _profile;
   final List<Trip> _trips = [];
@@ -13,6 +16,7 @@ class AppStateProvider extends ChangeNotifier {
   DriverProfile? get profile => _profile;
   List<Trip> get trips => _trips;
   bool get isLoading => _isLoading;
+  SpeedMonitoringService get speedService => _speedService;
 
   Future<void> fetchAppData(String driverId) async {
     _isLoading = true;
@@ -36,5 +40,15 @@ class AppStateProvider extends ChangeNotifier {
   void setActiveTrip(Trip trip) {
     // Logic for updating current active trip
     notifyListeners();
+  }
+
+  // Start speed monitoring when user logs in
+  void startSpeedMonitoring(BuildContext context, AuthProvider authProvider) {
+    _speedService.startMonitoring(context, authProvider);
+  }
+
+  // Stop speed monitoring when user logs out
+  void stopSpeedMonitoring() {
+    _speedService.stopMonitoring();
   }
 }

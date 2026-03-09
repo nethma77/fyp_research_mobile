@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/app_state_provider.dart';
 
 import '../home/home_screen.dart';
 import '../history/trip_history_screen.dart';
@@ -22,6 +25,25 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     ParkingScreen(),
     ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Start speed monitoring when user enters the main app
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = context.read<AuthProvider>();
+      final appStateProvider = context.read<AppStateProvider>();
+      appStateProvider.startSpeedMonitoring(context, authProvider);
+    });
+  }
+
+  @override
+  void dispose() {
+    // Stop speed monitoring when leaving the main app
+    final appStateProvider = context.read<AppStateProvider>();
+    appStateProvider.stopSpeedMonitoring();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -370,31 +370,41 @@ class _ActionCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(18),
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: SizedBox(
+            height: 120, // Fixed height to prevent overflow
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
 
-            children: [
+              children: [
 
-              Icon(icon, size: 30, color: AppColors.primary),
+                Icon(icon, size: 30, color: AppColors.primary),
 
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
 
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.text,
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.text,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
 
-              const SizedBox(height: 6),
+                const SizedBox(height: 6),
 
-              Text(
-                subtitle,
-                style: AppStyles.caption,
-              ),
-            ],
+                Expanded(
+                  child: Text(
+                    subtitle,
+                    style: AppStyles.caption,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

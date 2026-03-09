@@ -77,13 +77,26 @@ class FirestoreService {
     }
   }
 
-  /// Adds a new vehicle for a driver.
-  Future<bool> addDriverVehicle(String driverId, Map<String, dynamic> data) async {
+  /// Adds a new vehicle to the driver's vehicles subcollection.
+  Future<bool> addDriverVehicle(String driverId, Map<String, dynamic> vehicleData) async {
     try {
-      await _db.collection('drivers').doc(driverId).collection('vehicles').add(data);
+      await _db.collection('drivers').doc(driverId).collection('vehicles').add(vehicleData);
       return true;
     } catch (e) {
       print('Add driver vehicle error: $e');
+      return false;
+    }
+  }
+
+  /// Adds a new violation.
+  Future<bool> addViolation(Violation violation) async {
+    try {
+      print('Saving violation to Firestore: ${violation.toJson()}');
+      final docRef = await _db.collection('violations').add(violation.toJson());
+      print('Violation saved with ID: ${docRef.id}');
+      return true;
+    } catch (e) {
+      print('Add violation error: $e');
       return false;
     }
   }
@@ -142,8 +155,7 @@ class FirestoreService {
         timestamp: DateTime.now().subtract(const Duration(days: 15)),
         type: 'speeding',
         location: 'Main Street Zone 4',
-        fineAmount: 150.0,
-        status: 'unpaid',
+        status: 'pending',
       ).toJson());
 
       print('Dummy data generated successfully');
