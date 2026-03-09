@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../utils/routes.dart';
 
 class RuleViolationScreen extends StatelessWidget {
-  const RuleViolationScreen({Key? key}) : super(key: key);
+  const RuleViolationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class RuleViolationScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return ListTile(
             leading: const Icon(Icons.rule, color: Colors.orange),
-            title: Text('Violation \${index + 1}'),
+            title: const Text('Violation \${index + 1}'),
             subtitle: const Text('Type: Speeding\nStatus: Pending'),
             trailing: IconButton(
               icon: const Icon(Icons.visibility),

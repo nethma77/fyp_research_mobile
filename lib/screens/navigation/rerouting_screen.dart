@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReroutingScreen extends StatelessWidget {
-  const ReroutingScreen({Key? key}) : super(key: key);
+  const ReroutingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ParkingScreen extends StatelessWidget {
-  const ParkingScreen({Key? key}) : super(key: key);
+  const ParkingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

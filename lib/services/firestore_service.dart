@@ -4,6 +4,7 @@ import '../models/trip.dart';
 import '../models/parking.dart';
 import '../models/accident.dart';
 import '../models/violation.dart';
+import '../models/vehicle.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -23,7 +24,69 @@ class FirestoreService {
       return [];
     }
   }
+  // --------------------
+  // DRIVER PROFILE HELPERS
+  // --------------------
 
+  /// Retrieves the driver profile document for [driverId].
+  /// Returns null if the document does not exist or an error occurs.
+  Future<Map<String, dynamic>?> getDriverProfile(String driverId) async {
+    try {
+      final doc = await _db.collection('drivers').doc(driverId).get();
+      return doc.exists ? doc.data() as Map<String, dynamic> : null;
+    } catch (e) {
+      print('Get driver profile error: $e');
+      return null;
+    }
+  }
+
+  /// Creates a driver profile document with the given [data].
+  Future<bool> createDriverProfile(String driverId, Map<String, dynamic> data) async {
+    try {
+      await _db.collection('drivers').doc(driverId).set(data);
+      return true;
+    } catch (e) {
+      print('Create driver profile error: $e');
+      return false;
+    }
+  }
+
+  /// Updates the driver profile fields specified in [data].
+  Future<bool> updateDriverProfile(String driverId, Map<String, dynamic> data) async {
+    try {
+      await _db.collection('drivers').doc(driverId).update(data);
+      return true;
+    } catch (e) {
+      print('Update driver profile error: $e');
+      return false;
+    }
+  }
+
+  // --------------------
+  // VEHICLE HELPERS
+  // --------------------
+
+  /// Retrieves all vehicles for a driver.
+  Future<List<Vehicle>> getDriverVehicles(String driverId) async {
+    try {
+      final snapshot = await _db.collection('drivers').doc(driverId).collection('vehicles').get();
+      return snapshot.docs.map((doc) => Vehicle.fromJson(doc.data(), doc.id)).toList();
+    } catch (e) {
+      print('Get driver vehicles error: $e');
+      return [];
+    }
+  }
+
+  /// Adds a new vehicle for a driver.
+  Future<bool> addDriverVehicle(String driverId, Map<String, dynamic> data) async {
+    try {
+      await _db.collection('drivers').doc(driverId).collection('vehicles').add(data);
+      return true;
+    } catch (e) {
+      print('Add driver vehicle error: $e');
+      return false;
+    }
+  }
   // Generate Dummy Data for Testing
   Future<void> generateDummyData(String userId) async {
     try {
@@ -34,8 +97,6 @@ class FirestoreService {
           id: userId,
           name: 'John Doe',
           email: 'driver@test.com',
-          vehicleType: 'Car',
-          licenseNumber: 'DL123456789',
           rating: 4.8,
         ).toJson());
       }

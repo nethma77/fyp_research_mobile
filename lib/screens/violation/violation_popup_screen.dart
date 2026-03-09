@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ViolationPopupScreen extends StatelessWidget {
-  const ViolationPopupScreen({Key? key}) : super(key: key);
+  const ViolationPopupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

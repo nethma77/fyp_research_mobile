@@ -7,7 +7,7 @@ class AppStateProvider extends ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService();
 
   DriverProfile? _profile;
-  List<Trip> _trips = [];
+  final List<Trip> _trips = [];
   bool _isLoading = false;
 
   DriverProfile? get profile => _profile;

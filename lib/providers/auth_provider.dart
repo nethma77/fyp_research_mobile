@@ -25,6 +25,7 @@ class AuthProvider extends ChangeNotifier {
   bool get isAuthenticated => _user != null;
   String get userName => _userData?['name'] ?? 'Driver';
   String get userEmail => _userData?['email'] ?? '';
+  String get userPhone => _userData?['phone'] ?? '';
 
   // =====================
   // SIGN IN
@@ -37,10 +38,11 @@ class AuthProvider extends ChangeNotifier {
   // =====================
   // SIGN UP
   // =====================
-  Future<bool> signUp(String name, String email, String password) async {
+  Future<bool> signUp(String name, String email, String phone, String password) async {
     final result = await _authService.signUp(
       name: name,
       email: email,
+      phone: phone,
       password: password,
     );
     return result != null;

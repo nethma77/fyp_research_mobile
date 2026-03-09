@@ -18,6 +18,7 @@ class AuthService {
     required String email,
     required String password,
     required String name,
+    required String phone,
   }) async {
     try {
       // Create user in Firebase Auth
@@ -34,6 +35,7 @@ class AuthService {
           'uid': user.uid,
           'name': name,
           'email': email,
+          'phone': phone,
           'createdAt': FieldValue.serverTimestamp(),
         });
       }

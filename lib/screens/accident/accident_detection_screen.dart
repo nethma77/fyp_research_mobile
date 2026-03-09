@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AccidentDetectionScreen extends StatelessWidget {
-  const AccidentDetectionScreen({Key? key}) : super(key: key);
+  const AccidentDetectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
